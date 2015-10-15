@@ -11,8 +11,7 @@ function addGame() {
     document.write("<table><tr><td style='padding: 10px;'><input name='Game' type='text' size='30' value='" + gameName + "'/></td></tr></table>");
     document.write("<table><tr>");
     for (var i = 1; i <= 10; i++) {
-        document.write("<td colspan='2' id='frame'>" + i + "</td>" +
-            "0");
+        document.write("<td colspan='2' id='frame'>"+i+"</td>");
     }
     document.write("</tr><tr>");
     for (var i = 0; i <= 20; i++)  // Display input fields
