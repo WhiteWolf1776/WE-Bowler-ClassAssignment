@@ -199,3 +199,24 @@ function calculateOldAndUgly(form) {
         }
     }
 }
+
+function clearValues(form) {
+    for (var i = 0; i <= 20; i++)  // Clear ball entries
+    {
+        form.ball[i].value = "";
+    }
+    for (var i = 0; i < 10; i++)  // Clear score fields
+    {
+        form.score[i].value = "";
+    }
+    for (var frame = 0; frame < 11; frame++)  // Clear pin diagrams
+    {
+        for (var pin = 1; pin < 11; pin++)
+        {
+            imgName = form.name+frame+pin;
+            document.images[imgName].src = "hit.gif";
+        }
+    }
+    form.maxScore.value = "300";  // Clear Max Score field
+    form.player.value = "";  // Clear Player Name field
+}
