@@ -27,6 +27,48 @@ function addGame() {
     }
     //TODO: make this Final Score and use in the average method
     document.write("<td colspan='2'>&nbsp;</td><td><input type='text' name='maxScore' size='8' readOnly='true' value='300'/></td></tr>");
+
+    // Display pin diagram
+    document.write("<tr>");
+    for (var i=0; i<11; i++)  // Back row 4
+    {
+        document.write("<td colspan='2'><a href='#' onClick='changePin("+gameName+","+i+",7)' /><img src='hit.gif' name='"+gameName+i+"7' /></a><a href='#' onClick='changePin("+gameName+","+i+",8)' /><img src='hit.gif' name='"+gameName+i+"8' /></a><a href='#' onClick='changePin("+gameName+","+i+",9)' /><img src='hit.gif' name='"+gameName+i+"9' /></a><a href='#' onClick='changePin("+gameName+","+i+",10)' /><img src='hit.gif' name='"+gameName+i+"10' /></td>");
+    }
+    document.write("</tr><tr>");
+    for (var i=0; i<11; i++)  // 3 pin row
+    {
+        document.write("<td colspan='2'><a href='#' onClick='changePin("+gameName+","+i+",4)' /><img src='hit.gif' name='"+gameName+i+"4' /></a><a href='#' onClick='changePin("+gameName+","+i+",5)' /><img src='hit.gif' name='"+gameName+i+"5' /></a><a href='#' onClick='changePin("+gameName+","+i+",6)' /><img src='hit.gif' name='"+gameName+i+"6' /></a></td>");
+    }
+    document.write("</tr><tr>");
+    for (var i=0; i<11; i++)  // 2 pin row
+    {
+        document.write("<td colspan='2'><a href='#' onClick='changePin("+gameName+","+i+",2)' /><img src='hit.gif' name='"+gameName+i+"2' /></a><a href='#' onClick='changePin("+gameName+","+i+",3)' /><img src='hit.gif' name='"+gameName+i+"3' /></a></td>");
+    }
+    document.write("</tr><tr>");
+    for (var i=0; i<11; i++)  // head pin
+    {
+        document.write("<td colspan='2'><a href='#' onClick='changePin("+gameName+","+i+",1)' /><img src='hit.gif' name='"+gameName+i+"1' /></a></td>");
+    }
+    document.write("</tr>");
+    document.write("<tr><td colspan='4' id='tip'><img src='hit.gif' /> Pin knocked down</td><td colspan='6' id='tip'><img src='left.gif' /> Pin left standing after 1st ball</td><td colspan='6' id='tip'><img src='miss.gif' /> Pin left standing after spare ball</td><td colspan='7' style='text-align: right;'><input style='font-weight: normal;' type='button' name='clear' value='Clear values' onClick='clearValues("+gameName+")' /></td></tr></table>");
+    document.write("</form>");
+}
+
+function changePin(form, frame, pin) {
+    imgName = form.name+frame+pin;
+    fileName = document.images[imgName].src;
+    if (fileName.indexOf("hit") != -1)
+    {
+        document.images[imgName].src = "left.gif";
+    }
+    else if (fileName.indexOf("left") != -1)
+    {
+        document.images[imgName].src = "miss.gif";
+    }
+    else
+    {
+        document.images[imgName].src = "hit.gif";
+    }
 }
 
 function addGameButton() {
@@ -35,6 +77,10 @@ function addGameButton() {
 
 // calculate is called every time a score value is changed
 function calculate(form) {
+    calculateOldAndUgly(form);
+}
+
+function calculateOldAndUgly(form) {
     var nextBall = "";
     var thirdBall = "";
     var totalScore = 0;  // Total current score
