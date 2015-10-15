@@ -2,6 +2,10 @@
  * Created by nbliz0 on 10/15/2015.
  */
 
+//input should be a legal number or accepted valid symbols
+//input should not be less than 0
+//input should not exceed 10
+
 var assert = chai.assert;
 
 describe( 'Validating Input', function()  {
