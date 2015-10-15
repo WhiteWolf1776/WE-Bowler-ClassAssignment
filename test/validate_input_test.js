@@ -8,6 +8,7 @@
 
 var assert = chai.assert;
 
+
 describe( 'Validating Input', function()  {
 
   it( 'should validate user input', function() {
@@ -22,13 +23,21 @@ describe( 'Validating Input', function()  {
 
   it( 'should be valid symbol', function() {
     var symResult = validateSymbol();
-    assert.equal( symResult, false );
+    assert.equal( symResult, true );
   });
 
-  it( 'should be a valid game with 20 frames', function() {
-    var game [[1,1], [1,1], [1,1], [1,1], [1,1],
-              [1,1], [1,1], [1,1], [1,1], [1,1]];
-    
+  it( 'minimum value should be 0', function() {
+    var minScore = 1;
+    var minResult = validateMinScore( minScore );
+    assert.equal( minResult, true );
   });
+
+  it( 'maximum value should be 10', function() {
+    var maxScore = 11;
+    var maxResult = validateMaxScore( maxScore );
+    assert.equal( maxResult, false );
+  });
+
+
 
 } );

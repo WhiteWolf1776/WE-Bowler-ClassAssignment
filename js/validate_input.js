@@ -13,14 +13,33 @@ function validateNumber () {
 }
 
 function validateSymbol () {
-  var symbols = ['X', '/', '-'];
-  var input = 'Y';
-  index = indexOf.call( symbols, input );
-    if(index >= 0) {
-      return true;
-    }
-    else {
-      return false;
-    }
+var symbols = ['X', '/', '-'];
+var input = 'Y';
+var result = symbols.indexOf( input );
+  if( result >= 0 ) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function validateMinScore ( score ) {
+  var min = 0;
+  if( score < min ){
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function validateMaxScore ( score ) {
+  var max = 10;
+  if( score <= max){
+    return true;
+  }
+  else {
+    return false;
   }
 }
