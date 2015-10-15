@@ -43,3 +43,5 @@ function validateMaxScore ( score ) {
     return false;
   }
 }
+
+}
