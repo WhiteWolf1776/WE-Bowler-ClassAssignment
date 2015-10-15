@@ -5,8 +5,17 @@
 function calculateScore(score) {
     var gameScore = 0;
     for ( var i = 0; i < score.length; i++ ){
-        gameScore += parseInt(score[i][0]) + parseInt(score[i][1]);
-        score[i][3] = gameScore.toString();
+        var thisFrame = score[i][0] + score[i][1];
+        if ( score[i][0] == 10 )
+        {
+
+        }
+        else if (thisFrame == 10)
+        {
+            thisFrame = thisFrame + score[i+1][0]
+        }
+        gameScore += thisFrame;
+        score[i][3] = gameScore;
     }
 
     return score;
