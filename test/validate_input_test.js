@@ -8,7 +8,6 @@
 
 var assert = chai.assert;
 
-
 describe( 'Validating Input', function()  {
 
   it( 'should validate user input', function() {
@@ -37,7 +36,5 @@ describe( 'Validating Input', function()  {
     var maxResult = validateMaxScore( maxScore );
     assert.equal( maxResult, false );
   });
-
-
 
 } );
