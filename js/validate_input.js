@@ -1,7 +1,6 @@
 /**
  * Created by nbliz0 on 10/15/2015.
  */
-<<<<<<< HEAD
 
 function return0 () {
   return 0;
@@ -25,5 +24,3 @@ function validateSymbol () {
     }
   }
 }
-=======
->>>>>>> 62f19913dbc17ca4560b3cbe930715d475ee27cc

@@ -25,4 +25,10 @@ describe( 'Validating Input', function()  {
     assert.equal( symResult, false );
   });
 
+  it( 'should be a valid game with 20 frames', function() {
+    var game [[1,1], [1,1], [1,1], [1,1], [1,1],
+              [1,1], [1,1], [1,1], [1,1], [1,1]];
+    
+  });
+
 } );
