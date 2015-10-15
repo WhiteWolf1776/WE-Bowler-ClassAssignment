@@ -10,5 +10,15 @@ describe( 'Validating Input', function()  {
     var result = return0();
     assert.equal( result, 0 );
   } );
-  
+
+  it( 'should be a legal number', function() {
+    var numResult = validateNumber();
+    assert.equal( numResult, false );
+  });
+
+  it( 'should be valid symbol', function() {
+    var symResult = validateSymbol();
+    assert.equal( symResult, false );
+  });
+
 } );

@@ -5,3 +5,22 @@
 function return0 () {
   return 0;
 }
+
+function validateNumber () {
+  var input = 0;
+  var result = isNaN( input );
+  return result;
+}
+
+function validateSymbol () {
+  var symbols = ['X', '/', '-'];
+  var input = 'Y';
+  index = indexOf.call( symbols, input );
+    if(index >= 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
