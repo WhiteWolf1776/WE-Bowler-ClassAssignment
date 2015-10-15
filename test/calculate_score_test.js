@@ -44,4 +44,9 @@ describe( 'Scoring Tests', function() {
         assert.equal( rolls[9][3], 14);
     });
 
+    it ('it should calculate a perfect score game', function(){
+        rolls = calculateScore(perfectGame);
+        assert.equal( rolls[9][3], 300);
+    });
+
 } );
