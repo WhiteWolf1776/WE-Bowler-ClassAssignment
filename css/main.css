@@ -92,7 +92,7 @@ textarea {
 
 }
 
-input[type= "text"] {
+input[name="score"] {
   text-align: center;
 }
 
