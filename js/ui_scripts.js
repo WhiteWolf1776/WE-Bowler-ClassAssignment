@@ -158,10 +158,21 @@ function linkStylesheet() {
 }
 
 function writeScoreToForm(gameData, form) {
+
     for (var i = 0; i < 10; i++){
-        if (form.ball[i*2].value.length > 0)
+        if (form.ball[i*2].value.length > 0) {
             form.score[i].value = gameData[i][3];
-        else
+            var fudgeFactor = 30;
+            if (i >= 9){
+                fudgeFactor = 0;
+            }
+            else if (i == 0)
+            {
+                fudgeFactor = 20;
+            }
+            form.maxScore.value = ((9-i)*30)+ gameData[i][3] + fudgeFactor;
+
+        } else
             return;
     }
 }
@@ -257,108 +268,6 @@ function clearValues(form) {
     }
     form.maxScore.value = "300";  // Clear Max Score field
     form.player.value = "";  // Clear Player Name field
-}
-
-
-function calculateOldAndUgly(form) {
-    var nextBall = "";
-    var thirdBall = "";
-    var totalScore = 0;  // Total current score
-    for (var i = 0; i<10; i++)  // clear the score fields first
-    {
-        form.score[i].value = "";
-    }
-
-    validateInput(form);
-
-    for (var j = 0; j <= 18; j+=2)  // Main process loop
-    {
-        var frameScore = 0;  // Reset current frame score
-        var shouldDisplay = false;  // By default we don't want to display the score
-
-        // Check strike
-        if (form.ball[j].value.toLowerCase() == 'x')  // Strike can only be first ball of frame
-        {
-            frameScore += 10;
-            if (j < 16)  // Regular frame
-            {
-                if (form.ball[j+1].value != '')		   // Did user accidently put a value in ball 2 in a strike frame?
-                    form.ball[j+1].value = '';			   // Erase it if they did, those bastards
-                nextBall = form.ball[j+2].value;     // Next ball is first ball in next frame
-                if (nextBall.toLowerCase() == 'x')   // If the next ball is a strike, then we take 3rd ball
-                    thirdBall = form.ball[j+4].value;  // as first ball in the following frame
-                else
-                    thirdBall = form.ball[j+3].value;  // Otherwise, it's the second ball in the next frame
-            }
-            if (j == 16)  // 9th frame
-            {
-                nextBall = form.ball[j+2].value;  // Next ball is first ball in next frame
-                thirdBall = form.ball[j+3].value; // 3rd ball is 2nd ball in next frame
-            }
-            if (j == 18)  // 10th frame
-            {
-                nextBall = form.ball[j+1].value;  // Next ball is actually next ball
-                thirdBall = form.ball[j+2].value; // 3rd ball is actually 3rd ball
-            }
-            if (nextBall != '' && thirdBall != '')  // If next two balls have a value
-            {
-                if (nextBall.toLowerCase() == 'x')  // next ball is a strike too
-                {
-                    frameScore += 10;
-                    if (thirdBall.toLowerCase() == 'x') // Is 3rd ball strike too?
-                        frameScore += 10;
-                    else
-                        frameScore += parseInt(thirdBall); // Not strike, just take the value
-                }
-                else  // Must be a regular number
-                {
-                    if (thirdBall == '/')  // Is it a spare?
-                    {
-                        frameScore += 10;
-                    }
-                    else  // just an open frame
-                    {
-                        frameScore += parseInt(nextBall);
-                        frameScore += parseInt(thirdBall);
-                    }
-                }
-                shouldDisplay = true;
-            }
-        }
-        else if (form.ball[j].value != '' && form.ball[j+1].value != '')  // Not a strike, so we get spare or open frame
-        {
-            if (form.ball[j+1].value == '/')  // This frame is a spare
-            {
-                frameScore += 10;
-                if (form.ball[j+2].value != '')  // so we need to check next ball too
-                {
-                    if (form.ball[j+2].value.toLowerCase() == 'x')  // Next ball is strike
-                    {
-                        frameScore += 10;
-                        shouldDisplay = true;
-                    }
-                    else											// Next ball isn't strike, just take its value
-                    {
-                        frameScore += parseInt(form.ball[j+2].value);
-                        shouldDisplay=true;
-                    }
-                }
-            }
-            else								// This frame is an open frame, just add the two values
-            {
-                frameScore += parseInt(form.ball[j].value);
-                frameScore += parseInt(form.ball[j+1].value);
-                shouldDisplay = true;
-            }
-        }
-        totalScore += frameScore;  // Keep running total of our score
-        if (shouldDisplay)  // We have a displayable score, so let's display it
-        {
-            k = j / 2;  // Convert to correct score location
-            form.score[k].value = totalScore;
-            form.maxScore.value = ((9-k)*30)+ totalScore;  // This is how we calculate the max score, easy huh?
-        }
-    }
 }
 
 function validateInput(form) {
