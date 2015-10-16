@@ -72,7 +72,10 @@ function changePin(form, frame, pin) {
 
 function writeScoreToForm(gameData, form) {
     for (var i = 0; i < 10; i++){
-        form.score[i].value = gameData[i][3];
+        if (form.ball[i*2].value.length > 0)
+            form.score[i].value = gameData[i][3];
+        else
+            return;
     }
 }
 
@@ -96,41 +99,18 @@ function calculate(form) {
     //calculateOldAndUgly(form);
 }
 
-function validateInput(form) {
-
-    for (var i = 0; i <= 18; i++)  // Balls through 18, first balls can't have / and 2nd balls can't have x
-    {
-        if (form.ball[i].value == '-')  // Change dashes to zeroes
-            form.ball[i].value = '0';
-        fieldValue = form.ball[i].value;
-        if (i % 2 == 0 && fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue.toLowerCase() != 'x')
-            form.ball[i].value = "";  // Even j value means it's ball 1 of the frame
-        if (i % 2 != 0 && fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue != '/')
-            form.ball[i].value = "";  // Not even j value means it's ball 2 of the frame
-    }
-    // Special check on ball 19 and 20 - can have all values 0-9 and x and /
-    for (var i=19; i<=20; i++)
-    {
-        if (form.ball[i].value == '-')
-            form.ball[i].value = '0';
-        fieldValue = form.ball[i].value;
-        if (fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue != '/' && fieldValue != 'x')
-            form.ball[i].value = "";
-    }
-
-}
-
 function convertStringToScore(ballScore) {
     // if X make 10
-    if (ballScore.toUpper == 'X')
+    if (ballScore == 'X' || ballScore == 'x')
     {
         return 10;
     }
     //if - make 0
     if (ballScore == '-' || ballScore.length <= 0)
     {
-        return 0
+        return 0;
     }
+
     //if number - make int
     if (!isNaN(ballScore) ) {
         return parseInt(ballScore);
@@ -157,8 +137,11 @@ function parseValues(form) {
         var dataNum = i * 2;
         //check for X, for -, for nan
         gameData[i][0] = convertStringToScore(fieldValueList[dataNum]);
-        gameData[i][1] = convertStringToScore(fieldValueList[dataNum + 1]);
-
+        if (fieldValueList[dataNum + 1] != '/') {
+            gameData[i][1] = convertStringToScore(fieldValueList[dataNum + 1]);
+        } else {
+            gameData[i][1] = 10 - gameData[i][0];
+        }
         if (i == 9) {
             gameData[i][2] = convertStringToScore(fieldValueList[dataNum + 2]);
         }
@@ -167,6 +150,28 @@ function parseValues(form) {
     //return data
     return gameData;
 }
+
+function clearValues(form) {
+    for (var i = 0; i <= 20; i++)  // Clear ball entries
+    {
+        form.ball[i].value = "";
+    }
+    for (var i = 0; i < 10; i++)  // Clear score fields
+    {
+        form.score[i].value = "";
+    }
+    for (var frame = 0; frame < 11; frame++)  // Clear pin diagrams
+    {
+        for (var pin = 1; pin < 11; pin++)
+        {
+            imgName = form.name+frame+pin;
+            document.images[imgName].src = "hit.gif";
+        }
+    }
+    form.maxScore.value = "300";  // Clear Max Score field
+    form.player.value = "";  // Clear Player Name field
+}
+
 
 function calculateOldAndUgly(form) {
     var nextBall = "";
@@ -269,23 +274,27 @@ function calculateOldAndUgly(form) {
     }
 }
 
-function clearValues(form) {
-    for (var i = 0; i <= 20; i++)  // Clear ball entries
+function validateInput(form) {
+
+    for (var i = 0; i <= 18; i++)  // Balls through 18, first balls can't have / and 2nd balls can't have x
     {
-        form.ball[i].value = "";
+        if (form.ball[i].value == '-')  // Change dashes to zeroes
+            form.ball[i].value = '0';
+        fieldValue = form.ball[i].value;
+        if (i % 2 == 0 && fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue.toLowerCase() != 'x')
+            form.ball[i].value = "";  // Even j value means it's ball 1 of the frame
+        if (i % 2 != 0 && fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue != '/')
+            form.ball[i].value = "";  // Not even j value means it's ball 2 of the frame
     }
-    for (var i = 0; i < 10; i++)  // Clear score fields
+    // Special check on ball 19 and 20 - can have all values 0-9 and x and /
+    for (var i=19; i<=20; i++)
     {
-        form.score[i].value = "";
+        if (form.ball[i].value == '-')
+            form.ball[i].value = '0';
+        fieldValue = form.ball[i].value;
+        if (fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue != '/' && fieldValue != 'x')
+            form.ball[i].value = "";
     }
-    for (var frame = 0; frame < 11; frame++)  // Clear pin diagrams
-    {
-        for (var pin = 1; pin < 11; pin++)
-        {
-            imgName = form.name+frame+pin;
-            document.images[imgName].src = "hit.gif";
-        }
-    }
-    form.maxScore.value = "300";  // Clear Max Score field
-    form.player.value = "";  // Clear Player Name field
+
 }
+
