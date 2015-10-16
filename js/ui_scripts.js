@@ -70,6 +70,13 @@ function changePin(form, frame, pin) {
     }
 }
 
+function linkStylesheet() {
+  document.write("<head>");
+  document.write("<link rel='stylesheet' href='file:///C:/Users/jfost3/workspace/WE-Bowler-ClassAssignment/css/main.css' type='text/css'>");
+  //<LINK href="js-bsc.css" rel="stylesheet" type="text/css">
+  document.write("</head>");
+}
+
 function addGameButton() {
     document.write("<button onclick='addGame()'>Add Game</button>");
 }
