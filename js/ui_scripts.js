@@ -3,20 +3,48 @@
  */
 var gameNumber = 0;
 
+function addPlayerInfo() {
+     document.write("<table>"
+                   +"<tr>"
+                   +"<td style='padding: 10px;'>Player Name : <input type='text' name='Player Name' size='50'/>"
+                   +"</td>"
+                   +"</tr>"
+                   +"</table>");
+     document.write("<table>"
+                   +"<tr>"
+                   +"<td style='padding: 10px;'>Place Name : <input type='text' name='Place Name' size='50'/>"
+                   +"</td>"
+                   +"</tr>"
+                   +"</table>");
+     document.write("<table>"
+                   +"<tr>"
+                   +"<td style='padding: 10px;'>Date and Time : <input type='Date' name='Datetime' size='50'/>"
+                   +"</td>"
+                   +"</tr>"
+                   +"</table>");
+}
 
 function addGame() {
     gameNumber = gameNumber + 1;
     var gameName = "Game" + gameNumber;
     document.write("<form name='" + gameName + "' onSubmit='return false'>");
-    document.write("<table><tr><td style='padding: 10px;'><input name='Game' type='text' size='30' value='" + gameName + "'/></td></tr></table>");
-    document.write("<table><tr>");
+    document.write("<table id='gameNameTable'>"
+                  +"<tr>"
+                  +"<td style='padding: 10px;'>"
+                  +"<input name='Game' type='text' size='30' value='" + gameName + "'/>"
+                  +"</td>"
+                  +"</tr>"
+                  +"</table>");
+    document.write("<table id='gameScoreTable'><tr>");
     for (var i = 1; i <= 10; i++) {
         document.write("<td colspan='2' id='frame'>"+i+"</td>");
     }
     document.write("</tr><tr>");
     for (var i = 0; i <= 20; i++)  // Display input fields
     {
-        document.write("<td id= 'frameScoreCell'><input type='text' name='ball' size='1' maxLength='1' onChange='calculate("+gameName+")' /></td>");
+        document.write("<td id= 'frameScoreCell'>"
+                      +"<input type='text' name='ball' size='1' maxLength='1' onChange='calculate("+gameName+")' />"
+                      +"</td>");
     }
     document.write("<td>&nbsp;</td><td>Max Score</td></tr><tr>");  // Display the Max Score heading
 
@@ -25,31 +53,81 @@ function addGame() {
         document.write("<td colspan='2'><input type='text' name='score' size='7' readOnly='true' /></td>");
     }
     //TODO: make this Final Score and use in the average method
-    document.write("<td colspan='2'>&nbsp;</td><td><input type='text' name='maxScore' size='8' readOnly='true' value='300'/></td></tr>");
+    document.write("<td colspan='2'>"
+                  +"&nbsp;"
+                  +"</td>"
+                  +"<td>"
+                  +"<input type='text' name='maxScore' size='8' readOnly='true' value='300'/>"
+                  +"</td>"
+                  +"</tr>");
 
     // Display pin diagram
     document.write("<tr>");
     for (var i=0; i<11; i++)  // Back row 4
     {
-        document.write("<td colspan='2'><a href='#' onClick='changePin("+gameName+","+i+",7)' /><img src='hit.gif' name='"+gameName+i+"7' /></a><a href='#' onClick='changePin("+gameName+","+i+",8)' /><img src='hit.gif' name='"+gameName+i+"8' /></a><a href='#' onClick='changePin("+gameName+","+i+",9)' /><img src='hit.gif' name='"+gameName+i+"9' /></a><a href='#' onClick='changePin("+gameName+","+i+",10)' /><img src='hit.gif' name='"+gameName+i+"10' /></td>");
+        document.write("<td colspan='2'>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",7)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"7' />"
+                      +"</a>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",8)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"8' />"
+                      +"</a>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",9)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"9' />"
+                      +"</a>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",10)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"10' />"
+                      +"</td>");
     }
     document.write("</tr><tr>");
     for (var i=0; i<11; i++)  // 3 pin row
     {
-        document.write("<td colspan='2' style='padding-left: 6px;'><a href='#' onClick='changePin("+gameName+","+i+",4)' /><img src='hit.gif' name='"+gameName+i+"4' /></a><a href='#' onClick='changePin("+gameName+","+i+",5)' /><img src='hit.gif' name='"+gameName+i+"5' /></a><a href='#' onClick='changePin("+gameName+","+i+",6)' /><img src='hit.gif' name='"+gameName+i+"6' /></a></td>");
+        document.write("<td colspan='2' style='padding-left: 6px;'>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",4)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"4' />"
+                      +"</a>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",5)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"5' />"
+                      +"</a>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",6)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"6' />"
+                      +"</a>"
+                      +"</td>");
     }
     document.write("</tr><tr>");
     for (var i=0; i<11; i++)  // 2 pin row
     {
-        document.write("<td colspan='2' style='padding-left: 11px;'><a href='#' onClick='changePin("+gameName+","+i+",2)' /><img src='hit.gif' name='"+gameName+i+"2' /></a><a href='#' onClick='changePin("+gameName+","+i+",3)' /><img src='hit.gif' name='"+gameName+i+"3' /></a></td>");
+        document.write("<td colspan='2' style='padding-left: 11px;'>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",2)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"2' />"
+                      +"</a>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",3)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"3' />"
+                      +"</a>"
+                      +"</td>");
     }
     document.write("</tr><tr>");
     for (var i=0; i<11; i++)  // head pin
     {
-        document.write("<td colspan='2' style='padding-left: 17px;'><a href='#' onClick='changePin("+gameName+","+i+",1)' /><img src='hit.gif' name='"+gameName+i+"1' /></a></td>");
+        document.write("<td colspan='2' style='padding-left: 17px;'>"
+                      +"<a href='#' onClick='changePin("+gameName+","+i+",1)' />"
+                      +"<img src='hit.gif' name='"+gameName+i+"1' />"
+                      +"</a>"
+                      +"</td>");
     }
     document.write("</tr>");
-    document.write("<tr><td colspan='4' id='tip'><img src='hit.gif' /> Pin knocked down</td><td colspan='6' id='tip'><img src='left.gif' /> Pin left standing after 1st ball</td><td colspan='6' id='tip'><img src='miss.gif' /> Pin left standing after spare ball</td><td colspan='7' style='text-align: right;'><input style='font-weight: normal;' type='button' name='clear' value='Clear values' onClick='clearValues("+gameName+")' /></td></tr></table>");
+    document.write("<tr>"
+                  +"<td colspan='4' id='tip'>"
+                  +"<img src='hit.gif' name='hitGif'  /> Pin knocked down</td>"
+                  +"<td colspan='6' id='tip'>"
+                  +"<img src='left.gif' name='leftGif' /> Pin left standing after 1st ball</td>"
+                  +"<td colspan='6' id='tip'>"
+                  +"<img src='miss.gif' name='missGif' /> Pin left standing after spare ball</td>"
+                  +"<td colspan='7' style='text-align: right;'>"
+                  +"<input style='font-weight: normal;' type='button' name='clear' value='Clear values' onClick='clearValues("+gameName+")' />"
+                  +"</td>"
+                  +"</tr>"
+                  +"</table>");
     document.write("</form>");
 }
 
@@ -72,8 +150,10 @@ function changePin(form, frame, pin) {
 
 function linkStylesheet() {
   document.write("<head>");
+  //link main.css
   document.write("<link rel='stylesheet' href='file:///C:/Users/jfost3/workspace/WE-Bowler-ClassAssignment/css/main.css' type='text/css'>");
-  //<LINK href="js-bsc.css" rel="stylesheet" type="text/css">
+  //link google font api
+  document.write("<link href='https://fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>");
   document.write("</head>");
 }
 
@@ -304,4 +384,3 @@ function validateInput(form) {
     }
 
 }
-

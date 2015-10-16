@@ -87,20 +87,45 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+  font-family: 'Chewy', cursive;
+}
+
 
 #frameScoreCell {
 
 }
 
-input[name="score"] {
-  text-align: center;
+input[name="Game"] {
+  border-radius: 5px 5px 5px 5px;
 }
 
+input[name="score"] {
+  text-align: center;
+  background-color: #2EFE2E;
+}
 
+#gameNameTable{
+  background-color: #A901DB;
+  border-radius: 15px 30px 30px 15px
+}
 
+#gameScoreTable {
+  background-color: #2E64FE;
+  border-radius: 15px 50px 30px;
+}
 
+img[name="hitGif"] {
+  padding-left: 21px;
+}
 
+img[name="leftGif"] {
+  padding-left: 10px;
+}
 
+img[name="missGif"] {
+  padding-left: 5px;
+}
 
 
 
