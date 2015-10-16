@@ -75,6 +75,7 @@ function linkStylesheet() {
   document.write("<link rel='stylesheet' href='file:///C:/Users/jfost3/workspace/WE-Bowler-ClassAssignment/css/main.css' type='text/css'>");
   //<LINK href="js-bsc.css" rel="stylesheet" type="text/css">
   document.write("</head>");
+}
 
 function writeScoreToForm(gameData, form) {
     for (var i = 0; i < 10; i++){
