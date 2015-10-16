@@ -4,6 +4,7 @@
 var gameNumber = 0;
 
 function addPlayerInfo() {
+  document.write("<div id='playerInfoTable'>");
      document.write("<table>"
                    +"<tr>"
                    +"<td style='padding: 10px;'>Player Name : <input type='text' name='Player Name' size='50'/>"
@@ -22,6 +23,7 @@ function addPlayerInfo() {
                    +"</td>"
                    +"</tr>"
                    +"</table>");
+  document.write("</div>");
 }
 
 function addGame() {
@@ -151,7 +153,7 @@ function changePin(form, frame, pin) {
 function linkStylesheet() {
   document.write("<head>");
   //link main.css
-  document.write("<link rel='stylesheet' href='file:///C:/Users/jfost3/workspace/WE-Bowler-ClassAssignment/css/main.css' type='text/css'>");
+  document.write("<link rel='stylesheet' href='./css/main.css' type='text/css'>");
   //link google font api
   document.write("<link href='https://fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>");
   document.write("</head>");
