@@ -29,7 +29,7 @@ function addPlayerInfo() {
 function addGame() {
     gameNumber = gameNumber + 1;
     var gameName = "Game" + gameNumber;
-    document.write("<form name='" + gameName + "' onSubmit='return false'>");
+    document.write("<form id='" + gameName + "' name='" + gameName + "' onSubmit='return false'>");
     document.write("<table id='gameNameTable'>"
                   +"<tr>"
                   +"<td style='padding: 10px;'>"
@@ -180,7 +180,10 @@ function writeScoreToForm(gameData, form) {
 }
 
 function addGameButton() {
+
     document.write("<button onclick='addGame()'>Add Game</button>");
+    document.write("<td>&nbsp;</td><td>Average Score</td></tr><tr>");  // Display the Max Score heading
+    document.write("<td colspan='2'>&nbsp;</td><td><input type='text' id='avgScore' name='avgScore' size='8' readOnly='true' value=''/></td></tr>");
 }
 
 // calculate is called every time a score value is changed
@@ -196,7 +199,35 @@ function calculate(form) {
     //write scores to text boxes
     writeScoreToForm(gameData, form);
 
+    //update avgScore if necessary
+    buildAverageScore();
+
     //calculateOldAndUgly(form);
+}
+
+function buildAverageScore(){
+    if (gameNumber == 0){
+        return;
+    }
+
+    //collect scores
+    var avgScore = 0;
+    var numFinalScoredGames = 0;
+    for (var i = 1; i <= gameNumber; i++){
+        var form = document.getElementById( 'Game' + i);
+        if (form.score[9].value.length > 0) {
+            avgScore += parseInt(form.score[9].value);
+            numFinalScoredGames++;
+        }
+    }
+
+    //avgScore
+    if (numFinalScoredGames > 0) {
+        avgScore = avgScore / numFinalScoredGames;
+
+        //write to the screen
+        document.getElementById('avgScore').value = avgScore;
+    }
 }
 
 function convertStringToScore(ballScore) {
