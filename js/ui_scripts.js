@@ -75,6 +75,11 @@ function linkStylesheet() {
   document.write("<link rel='stylesheet' href='file:///C:/Users/jfost3/workspace/WE-Bowler-ClassAssignment/css/main.css' type='text/css'>");
   //<LINK href="js-bsc.css" rel="stylesheet" type="text/css">
   document.write("</head>");
+
+function writeScoreToForm(gameData, form) {
+    for (var i = 0; i < 10; i++){
+        form.score[i].value = gameData[i][3];
+    }
 }
 
 function addGameButton() {
@@ -83,19 +88,22 @@ function addGameButton() {
 
 // calculate is called every time a score value is changed
 function calculate(form) {
-    calculateOldAndUgly(form);
+
+    //get scores from the text boxes and validate all strings
+
+    var gameData = parseValues(form);
+
+    //calculate score
+    gameData = calculateScore(gameData);
+
+    //write scores to text boxes
+    writeScoreToForm(gameData, form);
+
+    //calculateOldAndUgly(form);
 }
 
-function calculateOldAndUgly(form) {
-    var nextBall = "";
-    var thirdBall = "";
-    var totalScore = 0;  // Total current score
-    for (var i = 0; i<10; i++)  // clear the score fields first
-    {
-        form.score[i].value = "";
-    }
+function validateInput(form) {
 
-// Validate the fields
     for (var i = 0; i <= 18; i++)  // Balls through 18, first balls can't have / and 2nd balls can't have x
     {
         if (form.ball[i].value == '-')  // Change dashes to zeroes
@@ -115,7 +123,67 @@ function calculateOldAndUgly(form) {
         if (fieldValue != '0' && fieldValue != '1' && fieldValue != '2' && fieldValue != '3' && fieldValue != '4' && fieldValue != '5' && fieldValue != '6' && fieldValue != '7' && fieldValue != '8' && fieldValue != '9' && fieldValue != '/' && fieldValue != 'x')
             form.ball[i].value = "";
     }
-// End of field validation
+
+}
+
+function convertStringToScore(ballScore) {
+    // if X make 10
+    if (ballScore.toUpper == 'X')
+    {
+        return 10;
+    }
+    //if - make 0
+    if (ballScore == '-' || ballScore.length <= 0)
+    {
+        return 0
+    }
+    //if number - make int
+    if (!isNaN(ballScore) ) {
+        return parseInt(ballScore);
+    }
+
+    return 0;
+}
+
+function parseValues(form) {
+    var fieldValueList = [];
+    var fieldValue;
+    //store text boxes in the var
+    for ( var i = 0; i <= 20; i++ ) {
+        fieldValue = form.ball[i].value;
+        fieldValueList[i] = fieldValue;
+    }
+
+    //convert game to integer data
+    var gameData = [[0,0],[0,0],[0,0],[0,0],[0,0],
+                    [0,0],[0,0],[0,0],[0,0],[0,0]];
+
+    for (var i = 0; i < 10; i++){
+
+        var dataNum = i * 2;
+        //check for X, for -, for nan
+        gameData[i][0] = convertStringToScore(fieldValueList[dataNum]);
+        gameData[i][1] = convertStringToScore(fieldValueList[dataNum + 1]);
+
+        if (i == 9) {
+            gameData[i][2] = convertStringToScore(fieldValueList[dataNum + 2]);
+        }
+    }
+
+    //return data
+    return gameData;
+}
+
+function calculateOldAndUgly(form) {
+    var nextBall = "";
+    var thirdBall = "";
+    var totalScore = 0;  // Total current score
+    for (var i = 0; i<10; i++)  // clear the score fields first
+    {
+        form.score[i].value = "";
+    }
+
+    validateInput(form);
 
     for (var j = 0; j <= 18; j+=2)  // Main process loop
     {
