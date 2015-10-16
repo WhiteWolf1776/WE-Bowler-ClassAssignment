@@ -3,7 +3,6 @@
  */
 var gameNumber = 0;
 
-
 function addGame() {
     gameNumber = gameNumber + 1;
     var gameName = "Game" + gameNumber;
@@ -98,7 +97,10 @@ function writeScoreToForm(gameData, form) {
 }
 
 function addGameButton() {
+
     document.write("<button onclick='addGame()'>Add Game</button>");
+
+    document.write("<td colspan='2'>&nbsp;</td><td><input type='text' name='avgScore' size='8' readOnly='true' value=''/></td></tr>");
 }
 
 // calculate is called every time a score value is changed
@@ -115,6 +117,16 @@ function calculate(form) {
     writeScoreToForm(gameData, form);
 
     //calculateOldAndUgly(form);
+}
+
+function buildAverageScore(){
+    if (gameNumber == 0){
+        return;
+    }
+    for (var i = 0; i < gameNumber; i++){
+
+    }
+    //avgScore
 }
 
 function convertStringToScore(ballScore) {
