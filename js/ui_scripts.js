@@ -126,7 +126,7 @@ function addGame() {
                   +"<td colspan='6' id='tip'>"
                   +"<img src='miss.gif' name='missGif' /> Pin left standing after spare ball</td>"
                   +"<td colspan='7' style='text-align: right;'>"
-                  +"<input style='font-weight: normal;' type='button' name='clear' value='Clear values' onClick='clearValues("+gameName+")' />"
+                  +"<input style='font-weight: normal; padding-right: 5px;' type='button' name='clear' value='Clear values' onClick='clearValues("+gameName+")' />"
                   +"</td>"
                   +"</tr>"
                   +"</table>");
@@ -181,7 +181,7 @@ function writeScoreToForm(gameData, form) {
 
 function addGameButton() {
 
-    document.write("<button onclick='addGame()'>Add Game</button>");
+    document.write("<button class='addGameButton' onclick='addGame()'>Add Game</button><br><br>");
     document.write("<td>&nbsp;</td><td>Average Score</td></tr><tr>");  // Display the Max Score heading
     document.write("<td colspan='2'>&nbsp;</td><td><input type='text' id='avgScore' name='avgScore' size='8' readOnly='true' value=''/></td></tr>");
 }
